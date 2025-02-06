@@ -13,8 +13,7 @@ curl -O https://cdn.azul.com/zulu/bin/zulu-repo_1.0.0-2_all.deb
 sudo apt-get install ./zulu-repo_1.0.0-2_all.deb
 sudo apt-get update
 sudo apt-get install zulu17-jdk
-sudo apt-get install -y docker.io maven
-usermod -a -G docker ubuntu
+sudo apt-get install -y maven
 
 # Install Trivy
 sudo wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
