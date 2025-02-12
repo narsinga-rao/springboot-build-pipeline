@@ -17,7 +17,7 @@ pipeline {
    stage('Stage I: Build') {
       steps {
         echo "Building Jar Component ..."
-        sh "export JAVA_HOME=/usr/lib/jvm/zulu17-ca-amd64; mvn clean package "
+        sh "export JAVA_HOME=/Users/pnrao/.sdkman/candidates/java/17.0.11-amzn; mvn clean package "
       }
     }
 
