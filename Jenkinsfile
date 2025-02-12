@@ -79,7 +79,7 @@ pipeline {
    stage('Stage VIII: Smoke Test ') {
       steps { 
         echo "Smoke Test the Image"
-        sh "docker run -d --name smokerun -p 8080:8080 sample-non-prod/springboot"
+        sh "docker run -d --name smokerun -p 8081:8081 sample-non-prod/springboot"
         sh "sleep 90; ./check.sh"
         sh "docker rm --force smokerun"
         }
