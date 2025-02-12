@@ -1,6 +1,7 @@
 
 pipeline {
-  agent { label 'any' }
+  //agent { label 'any' }
+  agent any
    environment { 
         registry = "841162706196.dkr.ecr.us-east-1.amazonaws.com/sample-non-prod/springboot" 
         registryCredential = 'AWS_CREDENTIALS' 
