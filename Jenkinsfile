@@ -23,14 +23,14 @@ pipeline {
    stage('Stage II: Code Coverage ') {
       steps {
 	    echo "Running Code Coverage ..."
-        sh "export JAVA_HOME=/usr/lib/jvm/zulu17-ca-amd64; mvn jacoco:report"
+        sh "export JAVA_HOME=/Users/pnrao/.sdkman/candidates/java/17.0.11-amzn; mvn jacoco:report"
       }
     }
 
    stage('Stage III: SCA') {
       steps { 
         echo "Running Software Composition Analysis using OWASP Dependency-Check ..."
-        sh "export JAVA_HOME=/usr/lib/jvm/zulu17-ca-amd64; mvn org.owasp:dependency-check-maven:check"
+        sh "export JAVA_HOME=/Users/pnrao/.sdkman/candidates/java/17.0.11-amzn; mvn org.owasp:dependency-check-maven:check"
       }
     }
 
