@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main', credentialsId: 'GITHUB_CREDENTIALS', url: 'https://github.com/narsinga-rao/springboot-build-pipeline.git'
+        git branch: 'master', credentialsId: 'GITHUB_CREDENTIALS', url: 'https://github.com/narsinga-rao/springboot-build-pipeline.git'
       }
     }
   
