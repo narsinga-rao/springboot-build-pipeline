@@ -8,7 +8,10 @@ import com.nrp.domainvalue.OnlineStatus;
 import com.nrp.exception.CarAlreadyInUseException;
 import com.nrp.service.car.CarService;
 import com.nrp.service.driver.DriverService;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -22,11 +25,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 @WebMvcTest(value = DriverController.class)
 public class DriverControllerTest {
@@ -39,6 +45,16 @@ public class DriverControllerTest {
 
     @MockitoBean
     private CarService carService;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    public void setup()
+    {
+        //Init MockMvc Object and build
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
     DriverDO mockDriver = new DriverDO("user01", "password");
 
@@ -160,6 +176,8 @@ public class DriverControllerTest {
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .put("/v1/drivers/1/car/5432PW")
+                //.header("Authorization", "Basic dXNlcjpwYXNzd29yZA==")
+                .with(csrf())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

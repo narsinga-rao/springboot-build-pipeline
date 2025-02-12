@@ -4,6 +4,7 @@ import com.nrp.controller.CarController;
 import com.nrp.domainobject.CarDO;
 import com.nrp.domainvalue.EngineType;
 import com.nrp.service.car.CarService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,6 +36,16 @@ public class CarControllerTest {
     private static final String LICENSE_PLATE = "546PW";
 
     private CarDO carDOResult = new CarDO(LICENSE_PLATE, 4, false, 10, EngineType.GAS, "MERCEDES");
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    public void setup()
+    {
+        //Init MockMvc Object and build
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
     @Test
     public void createCar() throws Exception {
