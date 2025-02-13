@@ -62,7 +62,7 @@ pipeline {
       steps { 
         echo "Build Docker Image"
         script {
-               docker.withRegistry( "https://" + registry, "ecr:us-east-1" + registryCredential ) { 
+               docker.withRegistry( "https://" + registry, "ecr:us-east-1:" + registryCredential ) { 
                  myImage = docker.build(registry + "springboot-build-pipeline:${env.BUILD_ID}")
                  myImage.push()
                 }
