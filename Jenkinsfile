@@ -4,8 +4,7 @@ pipeline {
   agent any
    environment { 
         registry = "841162706196.dkr.ecr.us-east-1.amazonaws.com/sample-non-prod/springboot" 
-        //registryCredential = "AWS_CREDENTIALS"
-        registryCredential = "Amazon ECR Registry:AWS_CREDENTIALS-us-east-1" 
+        registryCredential = "AWS_CREDENTIALS" 
    }
 
   stages {
@@ -63,7 +62,7 @@ pipeline {
       steps { 
         echo "Build Docker Image"
         script {
-               docker.withRegistry( "https://" + registry, registryCredential ) { 
+               docker.withRegistry( "https://" + registry, "ecr:us-east-1" + registryCredential ) { 
                  myImage = docker.build(registry + "springboot-build-pipeline:${env.BUILD_ID}")
                  myImage.push()
                 }
