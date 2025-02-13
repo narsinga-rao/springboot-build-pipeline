@@ -62,8 +62,8 @@ pipeline {
       steps { 
         echo "Build Docker Image"
         script {
-               docker.withRegistry( '', registryCredential ) { 
-                 myImage = docker.build registry
+               docker.withRegistry( registry, registryCredential ) { 
+                 myImage = docker.build("springboot-build-pipeline:${env.BUILD_ID}")
                  myImage.push()
                 }
         }
@@ -73,14 +73,14 @@ pipeline {
    stage('Stage VII: Scan Image ') {
       steps { 
         echo "Scanning Image for Vulnerabilities"
-        sh "trivy image --scanners vuln --offline-scan sample-non-prod/springboot:latest > trivyresults.txt"
+        sh "trivy image --scanners vuln --offline-scan springboot-build-pipeline:${env.BUILD_ID} > trivyresults.txt"
         }
     }
           
    stage('Stage VIII: Smoke Test ') {
       steps { 
         echo "Smoke Test the Image"
-        sh "docker run -d --name smokerun -p 8081:8081 sample-non-prod/springboot"
+        sh "docker run -d --name smokerun -p 8081:8081 springboot-build-pipeline:${env.BUILD_ID}"
         sh "sleep 90; ./check.sh"
         sh "docker rm --force smokerun"
         }
